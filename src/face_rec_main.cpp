@@ -168,6 +168,7 @@ extern char serv_err_strings[][512];
 /********************************************************************************************/
 int main(void)
 {
+#if defined(_STANDALONE_TEST_)
     std::string modelName;
     std::vector<Mat> _images;
     std::vector<int> _labels;
@@ -185,10 +186,10 @@ int main(void)
     filenames[5] = "liveb.jpg";
     filenames[6] = "livec.jpg";
     filenames[7] = "lived.jpg";
-    filenames[8] = "km1.jpg";
-    filenames[9] = "km2.jpg";
-    filenames[10] = "km3.jpg";
-    filenames[11] = "km4.jpg";
+    filenames[8] = "labeled1.jpg";
+    filenames[9] = "labeled2.jpg";
+    filenames[10] = "labeled3.jpg";
+    filenames[11] = "labeled4.jpg";
     
     detect_face();
     //return 0;
@@ -217,7 +218,7 @@ int main(void)
         _images.push_back(im);
         _labels.push_back(2);
     }
-#if 1
+
     for ( size_t i = 8 ; i < 12; i++) {
         im_in = imread(filenames[i], CV_LOAD_IMAGE_GRAYSCALE);
         /*Resize each image*/
@@ -228,7 +229,7 @@ int main(void)
         _images.push_back(im);
         _labels.push_back(3);
     }
-#endif
+
     pModel->train(_images,_labels);
     
 
@@ -248,7 +249,7 @@ int main(void)
     
     
     printf("exiting %d\n",predictedLabel);
-#if 0
+#else
     int sockfd, new_fd;  // listen on sock_fd, new connection on new_fd
     struct addrinfo hints, *servinfo, *p;
     struct sockaddr_storage their_addr; // connector's address information
